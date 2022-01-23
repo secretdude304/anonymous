@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+AUTH_USER_MODEL = 'anon.User'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
