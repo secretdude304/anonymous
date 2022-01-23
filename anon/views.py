@@ -4,7 +4,7 @@ from rest_framework.parsers import JSONParser
 from anon.models import *
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from anon.serializer import SnippetSerializer
+from anon.serializer import PostSerializer
 from anon.serializer import CommentSerializer
 from rest_framework import status
 from django.http import Http404
@@ -16,13 +16,13 @@ from django.views.decorators.csrf import csrf_exempt
 class PostList(APIView):
 
     def get(self, request, format=None):
-        snippets = post.objects.all()
-        snippets = snippets[::-1]
-        serializer = SnippetSerializer(snippets, many=True)
+        posts = post.objects.all()
+        posts = posts[::-1]
+        serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = SnippetSerializer(data=request.data)
+        serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -30,9 +30,6 @@ class PostList(APIView):
 
 
 class PostDetail(APIView):
-    """
-    Retrieve, update or delete a snippet instance.
-    """
 
     def get_object(self, pk):
         try:
@@ -41,22 +38,22 @@ class PostDetail(APIView):
             raise Http404
 
     def get(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = SnippetSerializer(snippet)
+        post = self.get_object(pk)
+        serializer = PostSerializer(post)
         print(serializer.data)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = SnippetSerializer(snippet, data=request.data)
+        post = self.get_object(pk)
+        serializer = PostSerializer(post, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        snippet.delete()
+        posts = self.get_object(pk)
+        posts.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 

@@ -2,7 +2,7 @@ from rest_framework import serializers
 from anon.models import *
 
 
-class SnippetSerializer(serializers.ModelSerializer):
+class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = post
         fields = ["id", 'title']
