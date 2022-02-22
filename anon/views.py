@@ -4,13 +4,14 @@ from rest_framework.parsers import JSONParser
 from anon.models import *
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from anon.serializer import PostSerializer
+from anon.serializer import PostSerializer, UserSerializer
 from anon.serializer import CommentSerializer
 from rest_framework import status
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework import viewsets
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 
 class PostList(APIView):
@@ -77,3 +78,37 @@ def getcomment(request, pk):
     comments = comment.objects.filter(postid=pk)
     serializer = CommentSerializer(comments, many=True)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+def VerifySchool(request):
+    data = request.data
+    email = data['email']
+    sliced = email[email.index("@")+1:]
+    slicedagain = sliced[0:sliced.index(".")]
+    print(slicedagain)
+    allschools = school()
+    userschool = school.objects.filter(emailSegment=slicedagain)
+    schoollist = []
+    for userscho in userschool:
+        schoollist.append(userscho.name)
+    print(schoollist)
+    schoollists = json.dumps(schoollist)
+
+    """
+    sliced = data[data.index("@")+1:]
+    slicedagain = sliced[0:sliced.index(".")]
+    print(slicedagain)
+    allschools = school()
+    userschool = allschools.filter(name=slicedagain)
+    """
+    print(schoollists)
+
+    return Response(schoollists, status=status.HTTP_200_OK)
+
+
+class RegisterView(APIView):
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save

@@ -12,3 +12,15 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = comment
         fields = ["postid", 'timestamp', "text"]
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["email", "password", "username", "password"]
+
+
+class SchoolSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = school
+        fields = ["name"]
