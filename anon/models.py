@@ -25,3 +25,4 @@ class User(AbstractUser):
 
 class school(models.Model):
     name = models.CharField(max_length=140)
+    emailSegment = models.CharField(max_length=140, default=True)
