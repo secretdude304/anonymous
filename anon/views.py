@@ -156,6 +156,10 @@ class RegisterView(APIView, MyTokenObtainPairSerializer):
         })
 
 
+class Post(APIView):
+    def upvote
+
+
 @api_view(['POST'])
 def tokenwithinfo(request):
     print(request.headers)
