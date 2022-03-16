@@ -156,8 +156,8 @@ class RegisterView(APIView, MyTokenObtainPairSerializer):
         })
 
 
-class Post(APIView):
-    def upvote
+"""class Post(APIView):
+    def upvote"""
 
 
 @api_view(['POST'])
